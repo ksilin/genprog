@@ -5,7 +5,7 @@
 lazy val genprog =
   project
     .in(file("."))
-    .enablePlugins(AutomateHeaderPlugin, GitVersioning)
+    .enablePlugins(GitVersioning)
     .settings(settings)
     .settings(
       libraryDependencies ++= Seq(
