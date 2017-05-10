@@ -8,8 +8,8 @@ object AstBuilder {
   def full(depth: Int, functions: IndexedSeq[(Exp, Exp) => Exp], terminals: IndexedSeq[Exp]): Exp = {
     def loop(i: Int): Exp =
       if (i == depth)
-        random(terminals)
-      else random(functions)(loop(i + 1), loop(i + 1))
+        randomElement(terminals)
+      else randomElement(functions)(loop(i + 1), loop(i + 1))
 
     loop(0)
   }
@@ -24,9 +24,9 @@ object AstBuilder {
 
     def loop(i: Int): Exp =
       if (i == depth || randomStop)
-        random(terminals)
+        randomElement(terminals)
       else
-        random(functions)(loop(i + 1), loop(i + 1))
+        randomElement(functions)(loop(i + 1), loop(i + 1))
 
     loop(0)
   }
@@ -53,27 +53,6 @@ object AstBuilder {
         }
       }
     loop(Set.empty, 0, 1)
-  }
-
-  def random(): Float = Random.nextFloat()
-
-  def random[T](elements: IndexedSeq[T]): T =
-    elements(Random.nextInt(elements.length))
-
-  def random(tree: Exp): Exp = random(collectAll(tree))
-
-  def collectAll(tree: Exp): IndexedSeq[Exp] = collect(tree) { case e => e }
-
-  def collect[T](tree: Exp)(pf: PartialFunction[Exp, T]): IndexedSeq[T] = {
-    def loop(subtree: Exp, acc: IndexedSeq[T]): IndexedSeq[T] = {
-      val result = if (pf.isDefinedAt(subtree)) acc :+ pf(subtree) else acc
-      subtree match {
-        case v: Var   => result
-        case c: Con   => result
-        case o: BinOp => result ++ loop(o.lhs, acc) ++ loop(o.rhs, acc)
-      }
-    }
-    loop(tree, IndexedSeq.empty)
   }
 
 }
