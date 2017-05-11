@@ -9,6 +9,7 @@ lazy val genprog =
     .settings(settings)
     .settings(
       libraryDependencies ++= Seq(
+        library.scalaChart,
         library.scalaCheck % Test,
         library.scalaTest  % Test
       )
@@ -21,11 +22,13 @@ lazy val genprog =
 lazy val library =
   new {
     object Version {
+      val scalaChart = "0.5.1"
       val scalaCheck = "1.13.5"
       val scalaTest  = "3.0.3"
     }
-    val scalaCheck = "org.scalacheck" %% "scalacheck" % Version.scalaCheck
-    val scalaTest  = "org.scalatest"  %% "scalatest"  % Version.scalaTest
+    val scalaChart = "com.github.wookietreiber" %% "scala-chart" % Version.scalaChart
+    val scalaCheck = "org.scalacheck"           %% "scalacheck"  % Version.scalaCheck
+    val scalaTest  = "org.scalatest"            %% "scalatest"   % Version.scalaTest
   }
 
 // *****************************************************************************
@@ -33,8 +36,8 @@ lazy val library =
 // *****************************************************************************
 
 lazy val settings =
-  commonSettings ++
-  gitSettings
+commonSettings ++
+gitSettings
 
 lazy val commonSettings =
   Seq(
@@ -47,7 +50,8 @@ lazy val commonSettings =
       "-deprecation",
       "-language:_",
       "-target:jvm-1.8",
-      "-encoding", "UTF-8"
+      "-encoding",
+      "UTF-8"
     ),
     unmanagedSourceDirectories.in(Compile) := Seq(scalaSource.in(Compile).value),
     unmanagedSourceDirectories.in(Test) := Seq(scalaSource.in(Test).value),
@@ -55,7 +59,7 @@ lazy val commonSettings =
       val project = Project.extract(state).currentRef.project
       s"[$project]> "
     }
-)
+  )
 
 lazy val gitSettings =
   Seq(

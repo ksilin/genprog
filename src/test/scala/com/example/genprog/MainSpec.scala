@@ -2,13 +2,14 @@ package com.example.genprog
 
 import com.example.genprog.model.{ Exp, Fitness, FunctionsAndTerminals, ST }
 import org.scalatest.{ FreeSpec, MustMatchers }
+import scalax.chart.api._
 
 class MainSpec extends FreeSpec with MustMatchers with FunctionsAndTerminals {
 
   "must run" in {
 
     val maxDepth                       = 6
-    val targetFunction: Float => Float = x => (Math.pow(x, 2) - x - 2).toFloat
+    val targetFunction: Float => Float = x => (Math.pow(x, 3) + Math.pow(x, 2) - x - 2).toFloat
 
     // orignal data to approximate
     val cases: Map[ST, Float] = (-3f)
@@ -16,16 +17,22 @@ class MainSpec extends FreeSpec with MustMatchers with FunctionsAndTerminals {
       .map(x => (Map('x -> x), targetFunction(x)))
       .toMap
 
-    val criteria: Float => Boolean = _ < 0.01f
+    val criteria: Float => Boolean = _ < 30f
 
     val fitTree: Exp =
       Main.run(functionSet, terminalSet, cases, Fitness.fitness, criteria, populationSize = 1000)
     println(fitTree)
 
-//    cases.foreach {
-//      case (symbols, expected) =>
-//        println(s"$expected: ${Exp.eval(fitTree, symbols)}")
-//    }
+    val res: Iterable[(Float, Float)] = cases map {
+      case (symbols, expected) =>
+        (symbols('x), Exp.eval(fitTree, symbols))
+    }
+
+    val expectedData = cases map { case (symbols, expected) => (symbols('x), expected) }
+
+    val dataList = List("expected" -> expectedData, "actual" -> res)
+    val chart    = XYLineChart(dataList)
+    chart.saveAsPNG("/tmp/chart.png")
 
   }
 
