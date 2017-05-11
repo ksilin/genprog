@@ -2,18 +2,17 @@ package com.example.genprog.model
 
 import org.scalatest.{ FreeSpec, MustMatchers }
 
-class FitnessSpec extends FreeSpec with MustMatchers {
+class FitnessSpec extends FreeSpec with MustMatchers with FunctionsAndTerminals {
 
-  // leafs of the AST are referred to as the terminal set, the branches are the function set
-  val terminalSet = IndexedSeq(Var('x)) ++ 1f.to(5f, 1f).map(Con)
-  val functionSet = IndexedSeq(Add, Sub, Div, Mul)
+  val targetFunction: Float => Float = x => (Math.pow(x, 2) - x - 2).toFloat
 
-  val cases = (-1f)
+  // orignal data to approximate
+  val cases: Map[ST, Float] = (-1f)
     .to(1f, 0.05f)
-    .map(x => (Map('x -> x), Math.pow(x, 2) - x - 2))
-    .toMap mapValues (_.toFloat)
+    .map(x => (Map('x -> x), targetFunction(x)))
+    .toMap
 
-  val fitness = Fitness.fitness(cases)
+  val fitness: (Exp) => Float = Fitness.fitness(cases)
 
   "fitness of random ast" in {
     val tree = AstBuilder.grow(5, functionSet, terminalSet)

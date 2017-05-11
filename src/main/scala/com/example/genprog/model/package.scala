@@ -9,7 +9,7 @@ package object model {
 
   def random(): Float = Random.nextFloat()
 
-  def randomElement[T](elements: IndexedSeq[T]): T =
+  def randomElement[T](elements: Seq[T]): T =
     elements(Random.nextInt(elements.length))
 
 }

@@ -2,11 +2,7 @@ package com.example.genprog.model
 
 import org.scalatest.{ FreeSpec, MustMatchers }
 
-class AstBuilderSpec extends FreeSpec with MustMatchers {
-
-  // leafs of the AST are referred to as the terminal set, the branches are the function set
-  val terminalSet = IndexedSeq(Var('x)) ++ 1f.to(5f, 1f).map(Con)
-  val functionSet = IndexedSeq(Add, Sub, Div, Mul)
+class AstBuilderSpec extends FreeSpec with MustMatchers with FunctionsAndTerminals {
 
   "must generate uniform tree" in {
     val ast = AstBuilder.full(3, functionSet, terminalSet)

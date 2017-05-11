@@ -5,7 +5,7 @@ import scala.util.Random
 object AstBuilder {
 
   // generates uniform full asts
-  def full(depth: Int, functions: IndexedSeq[(Exp, Exp) => Exp], terminals: IndexedSeq[Exp]): Exp = {
+  def full(depth: Int, functions: Seq[(Exp, Exp) => Exp], terminals: Seq[Exp]): Exp = {
     def loop(i: Int): Exp =
       if (i == depth)
         randomElement(terminals)
@@ -14,7 +14,7 @@ object AstBuilder {
     loop(0)
   }
 
-  def grow(depth: Int, functions: IndexedSeq[(Exp, Exp) => Exp], terminals: IndexedSeq[Exp]): Exp = {
+  def grow(depth: Int, functions: Seq[(Exp, Exp) => Exp], terminals: Seq[Exp]): Exp = {
 
     def randomStop: Boolean = {
       val tl = terminals.size.toFloat
@@ -33,8 +33,8 @@ object AstBuilder {
 
   def ramp(count: Int,
            maxDepth: Int,
-           functions: IndexedSeq[(Exp, Exp) => Exp],
-           terminals: IndexedSeq[Exp]): Set[Exp] = {
+           functions: Seq[(Exp, Exp) => Exp],
+           terminals: Seq[Exp]): Set[Exp] = {
 
     def loop(acc: Set[Exp], i: Int, depth: Int): Set[Exp] =
       if (i == count) {
