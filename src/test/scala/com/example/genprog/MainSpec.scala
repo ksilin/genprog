@@ -2,7 +2,6 @@ package com.example.genprog
 
 import com.example.genprog.model.{ Exp, Fitness, FunctionsAndTerminals, ST }
 import org.scalatest.{ FreeSpec, MustMatchers }
-import scalax.chart.api._
 
 class MainSpec extends FreeSpec with MustMatchers with FunctionsAndTerminals {
 
@@ -31,9 +30,6 @@ class MainSpec extends FreeSpec with MustMatchers with FunctionsAndTerminals {
     val expectedData = cases map { case (symbols, expected) => (symbols('x), expected) }
 
     val dataList = List("expected" -> expectedData, "actual" -> res)
-    val chart    = XYLineChart(dataList)
-    chart.saveAsPNG("/tmp/chart.png")
-
   }
 
 }
