@@ -9,7 +9,8 @@ lazy val genprog =
     .settings(settings)
     .settings(
       libraryDependencies ++= Seq(
-        library.scalaChart,
+        library.helisa,
+//        library.scalaChart,
         library.scalaCheck % Test,
         library.scalaTest  % Test
       )
@@ -22,11 +23,13 @@ lazy val genprog =
 lazy val library =
   new {
     object Version {
-      val scalaChart = "0.5.1"
-      val scalaCheck = "1.13.5"
-      val scalaTest  = "3.0.3"
+      val helisa     = "0.8.0"
+//      val scalaChart = "0.5.1"
+      val scalaCheck = "1.14.0"
+      val scalaTest  = "3.0.5"
     }
-    val scalaChart = "com.github.wookietreiber" %% "scala-chart" % Version.scalaChart
+    val helisa     = "com.softwaremill"         %% "helisa"      % Version.helisa
+//    val scalaChart = "com.github.wookietreiber" %% "scala-chart" % Version.scalaChart
     val scalaCheck = "org.scalacheck"           %% "scalacheck"  % Version.scalaCheck
     val scalaTest  = "org.scalatest"            %% "scalatest"   % Version.scalaTest
   }
@@ -41,7 +44,7 @@ gitSettings
 
 lazy val commonSettings =
   Seq(
-    scalaVersion := "2.12.2",
+    scalaVersion := "2.12.8",
     organization := "default",
     organizationName := "ksilin",
     startYear := Some(2017),
