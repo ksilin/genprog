@@ -10,7 +10,9 @@ lazy val genprog =
     .settings(
       libraryDependencies ++= Seq(
         library.helisa,
-//        library.scalaChart,
+        library.catsEffect,
+        library.akka,
+        library.fs2,
         library.scalaCheck % Test,
         library.scalaTest  % Test
       )
@@ -24,14 +26,17 @@ lazy val library =
   new {
     object Version {
       val helisa     = "0.8.0"
-//      val scalaChart = "0.5.1"
+      val cats       = "1.2.0"
+      val akka       = "2.5.17"
       val scalaCheck = "1.14.0"
       val scalaTest  = "3.0.5"
     }
-    val helisa     = "com.softwaremill"         %% "helisa"      % Version.helisa
-//    val scalaChart = "com.github.wookietreiber" %% "scala-chart" % Version.scalaChart
-    val scalaCheck = "org.scalacheck"           %% "scalacheck"  % Version.scalaCheck
-    val scalaTest  = "org.scalatest"            %% "scalatest"   % Version.scalaTest
+    val helisa     = "com.softwaremill"  %% "helisa"      % Version.helisa
+    val catsEffect = "org.typelevel"     %% "cats-effect" % Version.cats
+    val akka       = "com.typesafe.akka" %% "akka-stream" % Version.akka
+    val fs2        = "co.fs2"            %% "fs2-core"    % "1.0.4"
+    val scalaCheck = "org.scalacheck"    %% "scalacheck"  % Version.scalaCheck
+    val scalaTest  = "org.scalatest"     %% "scalatest"   % Version.scalaTest
   }
 
 // *****************************************************************************
